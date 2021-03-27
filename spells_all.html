@@ -90,7 +90,7 @@ xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     myObj = JSON.parse(this.responseText);
-    for (x in myObj) {
+    for (x in myObj) if ((myObj[x].wiz !== null) && (myObj[x].fire == 1)) {
       txt += "<h3>" + myObj[x].name + "</h3><details class=\"card border-primary mb-3\"><summary class=\"card-header\">" + myObj[x].short_description + " <span class=\"badge badge-success\">" + myObj[x].school + "</span></summary><span class=\"card-body\"><strong>Source</strong> " + myObj[x].source + myObj[x].full_text + "</span></details>"
     }
     txt += "</table>"    
