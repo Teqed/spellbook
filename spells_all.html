@@ -1,108 +1,124 @@
-<html>
-<header>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <h1 id="spells-known">Spells Known</h1>
-<p><title>Spells Known</title></p>
-<p><meta name="viewport" content="width=device-width, initial-scale=1"></p>
-<p><meta http-equiv="X-UA-Compatible" content="IE=edge"></p>
-<p><link rel="stylesheet" href="assets/css/bootstrap.css" media="screen"></p>
-<p><link rel="stylesheet" href="assets/css/custom.min.css"></p>
+<title>Spells Known</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="assets/css/bootstrap.css" media="screen">
+<link rel="stylesheet" href="assets/css/custom.min.css">
 <script type="text/javascript" async="" src="assets/js/ga.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/markdown-it@12.0.4/index.min.js"></script>
-
-<script>
-
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-23019901-1']);
-_gaq.push(['_setDomainName', "."]);
-        _gaq.push(['_setAllowLinker', true]);
-      _gaq.push(['_trackPageview']);
-
-     (function() {
-       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-     })();
-
-    </script>
-
-<script data-dapp-detection="">
-(function() {
-  let alreadyInsertedMetaTag = false
-
-  function __insertDappDetected() {
-    if (!alreadyInsertedMetaTag) {
-      const meta = document.createElement('meta')
-      meta.name = 'dapp-detected'
-      document.head.appendChild(meta)
-      alreadyInsertedMetaTag = true
-    }
-  }
-
-  if (window.hasOwnProperty('web3')) {
-    // Note a closure can't be used for this var because some sites like
-    // www.wnyc.org do a second script execution via eval for some reason.
-    window.__disableDappDetectionInsertion = true
-    // Likely oldWeb3 is undefined and it has a property only because
-    // we defined it. Some sites like wnyc.org are evaling all scripts
-    // that exist again, so this is protection against multiple calls.
-    if (window.web3 === undefined) {
-      return
-    }
-    __insertDappDetected()
-  } else {
-    var oldWeb3 = window.web3
-    Object.defineProperty(window, 'web3', {
-      configurable: true,
-      set: function (val) {
-        if (!window.__disableDappDetectionInsertion)
-          __insertDappDetected()
-        oldWeb3 = val
-      },
-      get: function () {
-        if (!window.__disableDappDetectionInsertion)
-          __insertDappDetected()
-        return oldWeb3
-      }
-    })
-  }
-})()</script>
-
-<style>
-    img {
-        border-radius: 50%;
-    }
-</style>
-
-
-</header>
+</head>
 <body>
 
-    <p><img src="https://www.dndbeyond.com/content/1-0-1487-0/skins/waterdeep/images/icons/classes/wizard.jpg" alt="Wizard"></p>
+    <p><img class="rad50" src="https://www.dndbeyond.com/content/1-0-1487-0/skins/waterdeep/images/icons/classes/wizard.jpg" alt="Wizard"></p>
 
-    <p id="demo"></p>
-
+  <div class="col-lg-8" style="max-width: 60rem;">
+    <p id="spellID01"></p>
+  </div>
 <script>
-var obj, dbParam, xmlhttp, myObj, x, txt = "";
+var obj, dbParam, xmlhttp, spellArray, varX, assemble_spell = "";
+var knownArray = ["Mage Hand","Ray of Frost","Grasp","Detect Fiendish Presence","Read Magic","Prestidigitation","Detect Magic","Stone Shield","Wave Shield","Air Bubble","Protection From Evil","Heightened Awareness","Mage Armor","Shield","Magic Missile","Detect Secret Doors","True Strike","Admonishing Ray ","Fox's Cunning","See Invisibility","False Life","False Life","Protection From Arrows","Mirror Image","Dispel Magic","Blink","Greater Invisibility","Ablative Barrier","Countless Eyes","Dimension Door","Emergency Force Sphere","Dimensional Anchor","Black Tentacles","Telekinetic Charge","Monstrous Physique III","Telekinesis","Summon Monster V"];
 obj = { table: "spells", limit: 20 };
 dbParam = JSON.stringify(obj);
+dbKnown = JSON.stringify(knownArray);
 xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
-    myObj = JSON.parse(this.responseText);
-    for (x in myObj) if ((myObj[x].wiz !== null) && (myObj[x].fire == 1)) {
-      txt += "<h3>" + myObj[x].name + "</h3><details class=\"card border-primary mb-3\"><summary class=\"card-header\">" + myObj[x].short_description + " <span class=\"badge badge-success\">" + myObj[x].school + "</span></summary><span class=\"card-body\"><strong>Source</strong> " + myObj[x].source + myObj[x].full_text + "</span></details>"
+    spellArray = JSON.parse(this.responseText);
+    for (varX in spellArray) if ((dbKnown.includes(spellArray[varX].name)) && (spellArray[varX].wiz !== null)) {
+      assemble_spell += 
+        "<h3>" + 
+        spellArray[varX].name + 
+        "</h3><details class=\"card border-primary mb-3\"><summary class=\"card-header\">" + 
+        spellArray[varX].short_description + 
+        " <span class=\"badge badge-success\">" + 
+        spellArray[varX].school + 
+        "</span></summary><span class=\"card-body\">" + 
+        spellArray[varX].full_text + 
+        "<strong>Source</strong> " + 
+        spellArray[varX].source + 
+        "</span></details>"
     }
-    txt += "</table>"    
-    document.getElementById("demo").innerHTML = txt;
+    assemble_spell += ""    
+    document.getElementById("spellID01").innerHTML = assemble_spell;
   }
 };
 xmlhttp.open("POST", "./spell_full.json", true);
 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xmlhttp.send("x=" + dbParam);
+xmlhttp.send("varX=" + dbParam);
 </script>    
 
 <hr>
 <hr>
 </body>
+<footer>
+</footer>
+<style>
+  img.rad50 {
+      border-radius: 50%;
+  }
+</style>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it@12.0.4/index.min.js"></script>
+<script>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-23019901-1']);
+  _gaq.push(['_setDomainName', "."]);
+          _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_trackPageview']);
+  
+       (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+  
+      </script>
+  
+  <script data-dapp-detection="">
+  (function() {
+    let alreadyInsertedMetaTag = false
+  
+    function __insertDappDetected() {
+      if (!alreadyInsertedMetaTag) {
+        const meta = document.createElement('meta')
+        meta.name = 'dapp-detected'
+        document.head.appendChild(meta)
+        alreadyInsertedMetaTag = true
+      }
+    }
+  
+    if (window.hasOwnProperty('web3')) {
+      // Note a closure can't be used for this var because some sites like
+      // www.wnyc.org do a second script execution via eval for some reason.
+      window.__disableDappDetectionInsertion = true
+      // Likely oldWeb3 is undefined and it has a property only because
+      // we defined it. Some sites like wnyc.org are evaling all scripts
+      // that exist again, so this is protection against multiple calls.
+      if (window.web3 === undefined) {
+        return
+      }
+      __insertDappDetected()
+    } else {
+      var oldWeb3 = window.web3
+      Object.defineProperty(window, 'web3', {
+        configurable: true,
+        set: function (val) {
+          if (!window.__disableDappDetectionInsertion)
+            __insertDappDetected()
+          oldWeb3 = val
+        },
+        get: function () {
+          if (!window.__disableDappDetectionInsertion)
+            __insertDappDetected()
+          return oldWeb3
+        }
+      })
+    }
+  })()</script>
 </html>
