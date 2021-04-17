@@ -11,43 +11,416 @@
 </head>
 <body>
 
-    <p><img class="rad50" src="https://www.dndbeyond.com/content/1-0-1487-0/skins/waterdeep/images/icons/classes/wizard.jpg" alt="Wizard"></p>
+    <p><img class="rad50" src="./wizard.jpg" alt="Wizard"></p>
 
-  <div class="col-lg-8" style="max-width: 60rem;">
-    <p id="spellID01"></p>
+  <div class="col-lg-12">
+    <details class="card border-light mb-3"><summary class="card-header">0th level</summary><p id="spellID00"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">1st level</summary><p id="spellID01"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">2nd level</summary><p id="spellID02"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">3rd level</summary><p id="spellID03"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">4th level</summary><p id="spellID04"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">5th level</summary><p id="spellID05"></p></details>
+    <!--
+    <details class="card border-light mb-3"><summary class="card-header">6th level</summary><p id="spellID06"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">7th level</summary><p id="spellID07"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">8th level</summary><p id="spellID08"></p></details>
+    <details class="card border-light mb-3"><summary class="card-header">9th level</summary><p id="spellID09"></p></details>
+    -->
   </div>
 <script>
-var obj, dbParam, xmlhttp, spellArray, varX, assemble_spell = "";
-var knownArray = ["Mage Hand","Ray of Frost","Grasp","Detect Fiendish Presence","Read Magic","Prestidigitation","Detect Magic","Stone Shield","Wave Shield","Air Bubble","Protection From Evil","Heightened Awareness","Mage Armor","Shield","Magic Missile","Detect Secret Doors","True Strike","Admonishing Ray ","Fox's Cunning","See Invisibility","False Life","False Life","Protection From Arrows","Mirror Image","Dispel Magic","Blink","Greater Invisibility","Ablative Barrier","Countless Eyes","Dimension Door","Emergency Force Sphere","Dimensional Anchor","Black Tentacles","Telekinetic Charge","Monstrous Physique III","Telekinesis","Summon Monster V"];
+  
+var obj = "", dbParam = "", xmlhttp = "", spellArray = "", varX = "", assemble_spell = "", assemble_spell0 = "", assemble_spell1 = "", assemble_spell2 = "", assemble_spell3 = "", assemble_spell4 = "", assemble_spell5 = "", assemble_spell6 = "", assemble_spell7 = "", assemble_spell8 = "", assemble_spell9 = "";
+var knownArray = ["Stone Shield"]
+var known0 = [
+  "Mage Hand",
+  "Ray of Frost",
+  "Grasp",
+  "Detect Fiendish Presence",
+  "Read Magic",
+  "Prestidigitation",
+  "Detect Magic"
+];
+var known1 = ["Stone Shield","Wave Shield","Air Bubble","Protection From Evil","Heightened Awareness","Mage Armor","Shield","Magic Missile","Detect Secret Doors","True Strike"]
+var known2 = ["Admonishing Ray ","Fox's Cunning","See Invisibility","False Life","False Life","Protection From Arrows","Mirror Image"]
+var known3 = ["Dispel Magic","Blink","Greater Invisibility","Ablative Barrier","Countless Eyes"]
+var known4 = ["Dimension Door","Emergency Force Sphere","Dimensional Anchor","Black Tentacles","Telekinetic Charge"]
+var known5 = ["Monstrous Physique III","Telekinesis","Summon Monster V"]
+var known6
+var known7
+var known8
+var known9
+
+var verbalcomp = ""
+var somaticcomp = ""
+var materialcomp = ""
+var focuscomp = ""
+var duration = ""
+var casting_time = ""
+
 obj = { table: "spells", limit: 20 };
 dbParam = JSON.stringify(obj);
 dbKnown = JSON.stringify(knownArray);
-xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
+dbKnown0 = JSON.stringify(known0);
+dbKnown1 = JSON.stringify(known1);
+dbKnown2 = JSON.stringify(known2);
+dbKnown3 = JSON.stringify(known3);
+dbKnown4 = JSON.stringify(known4);
+dbKnown5 = JSON.stringify(known5);
+dbKnown6 = JSON.stringify(known6);
+dbKnown7 = JSON.stringify(known7);
+dbKnown8 = JSON.stringify(known8);
+dbKnown9 = JSON.stringify(known9);
+
+</script>
+<script>
+
+//Level 0
+//Spell block Start
+
+xmlhttp0 = new XMLHttpRequest();
+xmlhttp0.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     spellArray = JSON.parse(this.responseText);
-    for (varX in spellArray) if ((dbKnown.includes(spellArray[varX].name)) && (spellArray[varX].wiz !== null)) {
-      assemble_spell += 
-        "<h3>" + 
+    for (varX in spellArray) if (dbKnown0.includes(spellArray[varX].name)) {
+      casting_time = " <span class=\"badge badge-secondary\">" + spellArray[varX].casting_time + "</span>"
+      duration = " <span class=\"badge badge-secondary\">" + spellArray[varX].duration + "</span> "
+      schoolborder = ""
+      if (spellArray[varX].school == "divination") {schoolborder = "dark"}
+      if (spellArray[varX].school == "abjuration") {schoolborder = "primary"}
+      if (spellArray[varX].school == "illusion") {schoolborder = "info"}
+      if (spellArray[varX].school == "conjuration") {schoolborder = "warning"}
+      if (spellArray[varX].school == "enchantment") {schoolborder = "secondary"}
+      if (spellArray[varX].school == "evocation") {schoolborder = "danger"}
+      if (spellArray[varX].school == "necromancy") {schoolborder = "light"}
+      if (spellArray[varX].school == "transmutation") {schoolborder = "success"}
+      if (spellArray[varX].school == "universal") {schoolborder = "secondary"}
+      if (spellArray[varX].verbal == 1) {verbalcomp = "<span class=\"badge badge-pill badge-success\">V</span>"} else {verbalcomp = ""}
+      if (spellArray[varX].somatic == 1) {somaticcomp = "<span class=\"badge badge-pill badge-warning\">S</span>"} else {somaticcomp = ""}
+      if (spellArray[varX].focus == 1) {focuscomp = "<span class=\"badge badge-pill badge-info\">F</span>"} else {focuscomp = ""}
+      if (spellArray[varX].material == 1) {materialcomp = "<span class=\"badge badge-pill badge-danger\">M</span>"} else {materialcomp = ""}
+      assemble_spell0 += 
+        "<br><h3 class=\"col-lg-7\">" + 
+        "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
+          spellArray[varX].id +
+          "\" checked=\"\"><label class=\"custom-control-label\" for=\"" +
+          spellArray[varX].id +
+          "\">" +
         spellArray[varX].name + 
-        "</h3><details class=\"card border-primary mb-3\"><summary class=\"card-header\">" + 
+        "</label></div></h3><div class=\"col-lg-7\"><details class=\"card border-" + schoolborder + " mb-3\"><summary class=\"card-header\">" + 
         spellArray[varX].short_description + 
-        " <span class=\"badge badge-success\">" + 
+        "<span style=\"float: right\">" +
+        verbalcomp +
+        somaticcomp +
+        focuscomp +
+        materialcomp +
+        casting_time +
+        duration +
+        " <span class=\"badge badge-" + schoolborder + "\">" + 
         spellArray[varX].school + 
-        "</span></summary><span class=\"card-body\">" + 
+        "</span></span></summary><span class=\"card-body\">" + 
         spellArray[varX].full_text + 
         "<strong>Source</strong> " + 
         spellArray[varX].source + 
-        "</span></details>"
+        "</span></details></div>"
     }
-    assemble_spell += ""    
-    document.getElementById("spellID01").innerHTML = assemble_spell;
+    assemble_spell0 += ""    
+    document.getElementById("spellID00").innerHTML = assemble_spell0;
   }
 };
-xmlhttp.open("POST", "./spell_full.json", true);
-xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xmlhttp.send("varX=" + dbParam);
+
+xmlhttp0.open("POST", "./spell0.json", true);
+xmlhttp0.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp0.send("varX=" + dbParam);
+
+//Spell block End
+//Level 1
+
+xmlhttp1 = new XMLHttpRequest();
+xmlhttp1.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    spellArray = JSON.parse(this.responseText);
+    for (varX in spellArray) if (dbKnown1.includes(spellArray[varX].name)) {
+      casting_time = " <span class=\"badge badge-secondary\">" + spellArray[varX].casting_time + "</span>"
+      duration = " <span class=\"badge badge-secondary\">" + spellArray[varX].duration + "</span> "
+      schoolborder = ""
+      if (spellArray[varX].school == "divination") {schoolborder = "dark"}
+      if (spellArray[varX].school == "abjuration") {schoolborder = "primary"}
+      if (spellArray[varX].school == "illusion") {schoolborder = "info"}
+      if (spellArray[varX].school == "conjuration") {schoolborder = "warning"}
+      if (spellArray[varX].school == "enchantment") {schoolborder = "secondary"}
+      if (spellArray[varX].school == "evocation") {schoolborder = "danger"}
+      if (spellArray[varX].school == "necromancy") {schoolborder = "light"}
+      if (spellArray[varX].school == "transmutation") {schoolborder = "success"}
+      if (spellArray[varX].school == "universal") {schoolborder = "secondary"}
+      if (spellArray[varX].verbal == 1) {verbalcomp = "<span class=\"badge badge-pill badge-success\">V</span>"} else {verbalcomp = ""}
+      if (spellArray[varX].somatic == 1) {somaticcomp = "<span class=\"badge badge-pill badge-warning\">S</span>"} else {somaticcomp = ""}
+      if (spellArray[varX].focus == 1) {focuscomp = "<span class=\"badge badge-pill badge-info\">F</span>"} else {focuscomp = ""}
+      if (spellArray[varX].material == 1) {materialcomp = "<span class=\"badge badge-pill badge-danger\">M</span>"} else {materialcomp = ""}
+      assemble_spell1 += 
+        "<br><h3 class=\"col-lg-7\">" + 
+        "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
+          spellArray[varX].id +
+          "\" checked=\"\"><label class=\"custom-control-label\" for=\"" +
+          spellArray[varX].id +
+          "\">" +
+        spellArray[varX].name + 
+        "</label></div></h3><div class=\"col-lg-7\"><details class=\"card border-" + schoolborder + " mb-3\"><summary class=\"card-header\">" + 
+        spellArray[varX].short_description + 
+        "<span style=\"float: right\">" +
+        verbalcomp +
+        somaticcomp +
+        focuscomp +
+        materialcomp +
+        casting_time +
+        duration +
+        " <span class=\"badge badge-" + schoolborder + "\">" + 
+        spellArray[varX].school + 
+        "</span></span></summary><span class=\"card-body\">" + 
+        spellArray[varX].full_text + 
+        "<strong>Source</strong> " + 
+        spellArray[varX].source + 
+        "</span></details></div>"
+    }
+    assemble_spell1 += ""    
+    document.getElementById("spellID01").innerHTML = assemble_spell1;
+  }
+};
+
+xmlhttp1.open("POST", "./spell1.json", true);
+xmlhttp1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp1.send("varX=" + dbParam);
+
+//Level 2
+
+xmlhttp2 = new XMLHttpRequest();
+xmlhttp2.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    spellArray = JSON.parse(this.responseText);
+    for (varX in spellArray) if (dbKnown2.includes(spellArray[varX].name)) {
+      casting_time = " <span class=\"badge badge-secondary\">" + spellArray[varX].casting_time + "</span>"
+      duration = " <span class=\"badge badge-secondary\">" + spellArray[varX].duration + "</span> "
+      schoolborder = ""
+      if (spellArray[varX].school == "divination") {schoolborder = "dark"}
+      if (spellArray[varX].school == "abjuration") {schoolborder = "primary"}
+      if (spellArray[varX].school == "illusion") {schoolborder = "info"}
+      if (spellArray[varX].school == "conjuration") {schoolborder = "warning"}
+      if (spellArray[varX].school == "enchantment") {schoolborder = "secondary"}
+      if (spellArray[varX].school == "evocation") {schoolborder = "danger"}
+      if (spellArray[varX].school == "necromancy") {schoolborder = "light"}
+      if (spellArray[varX].school == "transmutation") {schoolborder = "success"}
+      if (spellArray[varX].school == "universal") {schoolborder = "secondary"}
+      if (spellArray[varX].verbal == 1) {verbalcomp = "<span class=\"badge badge-pill badge-success\">V</span>"} else {verbalcomp = ""}
+      if (spellArray[varX].somatic == 1) {somaticcomp = "<span class=\"badge badge-pill badge-warning\">S</span>"} else {somaticcomp = ""}
+      if (spellArray[varX].focus == 1) {focuscomp = "<span class=\"badge badge-pill badge-info\">F</span>"} else {focuscomp = ""}
+      if (spellArray[varX].material == 1) {materialcomp = "<span class=\"badge badge-pill badge-danger\">M</span>"} else {materialcomp = ""}
+      assemble_spell2 += 
+        "<br><h3 class=\"col-lg-7\">" + 
+        "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
+          spellArray[varX].id +
+          "\" checked=\"\"><label class=\"custom-control-label\" for=\"" +
+          spellArray[varX].id +
+          "\">" +
+        spellArray[varX].name + 
+        "</label></div></h3><div class=\"col-lg-7\"><details class=\"card border-" + schoolborder + " mb-3\"><summary class=\"card-header\">" + 
+        spellArray[varX].short_description + 
+        "<span style=\"float: right\">" +
+        verbalcomp +
+        somaticcomp +
+        focuscomp +
+        materialcomp +
+        casting_time +
+        duration +
+        " <span class=\"badge badge-" + schoolborder + "\">" + 
+        spellArray[varX].school + 
+        "</span></span></summary><span class=\"card-body\">" + 
+        spellArray[varX].full_text + 
+        "<strong>Source</strong> " + 
+        spellArray[varX].source + 
+        "</span></details></div>"
+    }
+    assemble_spell2 += ""    
+    document.getElementById("spellID02").innerHTML = assemble_spell2;
+  }
+};
+
+xmlhttp2.open("POST", "./spell2.json", true);
+xmlhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp2.send("varX=" + dbParam);
+
+//Level 3
+
+xmlhttp3 = new XMLHttpRequest();
+xmlhttp3.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    spellArray = JSON.parse(this.responseText);
+    for (varX in spellArray) if (dbKnown3.includes(spellArray[varX].name)) {
+      casting_time = " <span class=\"badge badge-secondary\">" + spellArray[varX].casting_time + "</span>"
+      duration = " <span class=\"badge badge-secondary\">" + spellArray[varX].duration + "</span> "
+      schoolborder = ""
+      if (spellArray[varX].school == "divination") {schoolborder = "dark"}
+      if (spellArray[varX].school == "abjuration") {schoolborder = "primary"}
+      if (spellArray[varX].school == "illusion") {schoolborder = "info"}
+      if (spellArray[varX].school == "conjuration") {schoolborder = "warning"}
+      if (spellArray[varX].school == "enchantment") {schoolborder = "secondary"}
+      if (spellArray[varX].school == "evocation") {schoolborder = "danger"}
+      if (spellArray[varX].school == "necromancy") {schoolborder = "light"}
+      if (spellArray[varX].school == "transmutation") {schoolborder = "success"}
+      if (spellArray[varX].school == "universal") {schoolborder = "secondary"}
+      if (spellArray[varX].verbal == 1) {verbalcomp = "<span class=\"badge badge-pill badge-success\">V</span>"} else {verbalcomp = ""}
+      if (spellArray[varX].somatic == 1) {somaticcomp = "<span class=\"badge badge-pill badge-warning\">S</span>"} else {somaticcomp = ""}
+      if (spellArray[varX].focus == 1) {focuscomp = "<span class=\"badge badge-pill badge-info\">F</span>"} else {focuscomp = ""}
+      if (spellArray[varX].material == 1) {materialcomp = "<span class=\"badge badge-pill badge-danger\">M</span>"} else {materialcomp = ""}
+      assemble_spell3 += 
+        "<br><h3 class=\"col-lg-7\">" + 
+        "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
+          spellArray[varX].id +
+          "\" checked=\"\"><label class=\"custom-control-label\" for=\"" +
+          spellArray[varX].id +
+          "\">" +
+        spellArray[varX].name + 
+        "</label></div></h3><div class=\"col-lg-7\"><details class=\"card border-" + schoolborder + " mb-3\"><summary class=\"card-header\">" + 
+        spellArray[varX].short_description + 
+        "<span style=\"float: right\">" +
+        verbalcomp +
+        somaticcomp +
+        focuscomp +
+        materialcomp +
+        casting_time +
+        duration +
+        " <span class=\"badge badge-" + schoolborder + "\">" + 
+        spellArray[varX].school + 
+        "</span></span></summary><span class=\"card-body\">" + 
+        spellArray[varX].full_text + 
+        "<strong>Source</strong> " + 
+        spellArray[varX].source + 
+        "</span></details></div>"
+    }
+    assemble_spell3 += ""    
+    document.getElementById("spellID03").innerHTML = assemble_spell3;
+  }
+};
+
+xmlhttp3.open("POST", "./spell3.json", true);
+xmlhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp3.send("varX=" + dbParam);
+
+//Level 4
+
+xmlhttp4 = new XMLHttpRequest();
+xmlhttp4.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    spellArray = JSON.parse(this.responseText);
+    for (varX in spellArray) if (dbKnown4.includes(spellArray[varX].name)) {
+      casting_time = " <span class=\"badge badge-secondary\">" + spellArray[varX].casting_time + "</span>"
+      duration = " <span class=\"badge badge-secondary\">" + spellArray[varX].duration + "</span> "
+      schoolborder = ""
+      if (spellArray[varX].school == "divination") {schoolborder = "dark"}
+      if (spellArray[varX].school == "abjuration") {schoolborder = "primary"}
+      if (spellArray[varX].school == "illusion") {schoolborder = "info"}
+      if (spellArray[varX].school == "conjuration") {schoolborder = "warning"}
+      if (spellArray[varX].school == "enchantment") {schoolborder = "secondary"}
+      if (spellArray[varX].school == "evocation") {schoolborder = "danger"}
+      if (spellArray[varX].school == "necromancy") {schoolborder = "light"}
+      if (spellArray[varX].school == "transmutation") {schoolborder = "success"}
+      if (spellArray[varX].school == "universal") {schoolborder = "secondary"}
+      if (spellArray[varX].verbal == 1) {verbalcomp = "<span class=\"badge badge-pill badge-success\">V</span>"} else {verbalcomp = ""}
+      if (spellArray[varX].somatic == 1) {somaticcomp = "<span class=\"badge badge-pill badge-warning\">S</span>"} else {somaticcomp = ""}
+      if (spellArray[varX].focus == 1) {focuscomp = "<span class=\"badge badge-pill badge-info\">F</span>"} else {focuscomp = ""}
+      if (spellArray[varX].material == 1) {materialcomp = "<span class=\"badge badge-pill badge-danger\">M</span>"} else {materialcomp = ""}
+      assemble_spell4 += 
+        "<br><h3 class=\"col-lg-7\">" + 
+        "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
+          spellArray[varX].id +
+          "\" checked=\"\"><label class=\"custom-control-label\" for=\"" +
+          spellArray[varX].id +
+          "\">" +
+        spellArray[varX].name + 
+        "</label></div></h3><div class=\"col-lg-7\"><details class=\"card border-" + schoolborder + " mb-3\"><summary class=\"card-header\">" + 
+        spellArray[varX].short_description + 
+        "<span style=\"float: right\">" +
+        verbalcomp +
+        somaticcomp +
+        focuscomp +
+        materialcomp +
+        casting_time +
+        duration +
+        " <span class=\"badge badge-" + schoolborder + "\">" + 
+        spellArray[varX].school + 
+        "</span></span></summary><span class=\"card-body\">" + 
+        spellArray[varX].full_text + 
+        "<strong>Source</strong> " + 
+        spellArray[varX].source + 
+        "</span></details></div>"
+    }
+    assemble_spell4 += ""    
+    document.getElementById("spellID04").innerHTML = assemble_spell4;
+  }
+};
+
+xmlhttp4.open("POST", "./spell4.json", true);
+xmlhttp4.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp4.send("varX=" + dbParam);
+
+//Level 5
+
+xmlhttp5 = new XMLHttpRequest();
+xmlhttp5.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    spellArray = JSON.parse(this.responseText);
+    for (varX in spellArray) if (dbKnown5.includes(spellArray[varX].name)) {
+      casting_time = " <span class=\"badge badge-secondary\">" + spellArray[varX].casting_time + "</span>"
+      duration = " <span class=\"badge badge-secondary\">" + spellArray[varX].duration + "</span> "
+      schoolborder = ""
+      if (spellArray[varX].school == "divination") {schoolborder = "dark"}
+      if (spellArray[varX].school == "abjuration") {schoolborder = "primary"}
+      if (spellArray[varX].school == "illusion") {schoolborder = "info"}
+      if (spellArray[varX].school == "conjuration") {schoolborder = "warning"}
+      if (spellArray[varX].school == "enchantment") {schoolborder = "secondary"}
+      if (spellArray[varX].school == "evocation") {schoolborder = "danger"}
+      if (spellArray[varX].school == "necromancy") {schoolborder = "light"}
+      if (spellArray[varX].school == "transmutation") {schoolborder = "success"}
+      if (spellArray[varX].school == "universal") {schoolborder = "secondary"}
+      if (spellArray[varX].verbal == 1) {verbalcomp = "<span class=\"badge badge-pill badge-success\">V</span>"} else {verbalcomp = ""}
+      if (spellArray[varX].somatic == 1) {somaticcomp = "<span class=\"badge badge-pill badge-warning\">S</span>"} else {somaticcomp = ""}
+      if (spellArray[varX].focus == 1) {focuscomp = "<span class=\"badge badge-pill badge-info\">F</span>"} else {focuscomp = ""}
+      if (spellArray[varX].material == 1) {materialcomp = "<span class=\"badge badge-pill badge-danger\">M</span>"} else {materialcomp = ""}
+      assemble_spell5 += 
+        "<br><h3 class=\"col-lg-7\">" + 
+        "<div class=\"custom-control custom-checkbox\"><input type=\"checkbox\" class=\"custom-control-input\" id=\"" +
+          spellArray[varX].id +
+          "\" checked=\"\"><label class=\"custom-control-label\" for=\"" +
+          spellArray[varX].id +
+          "\">" +
+        spellArray[varX].name + 
+        "</label></div></h3><div class=\"col-lg-7\"><details class=\"card border-" + schoolborder + " mb-3\"><summary class=\"card-header\">" + 
+        spellArray[varX].short_description + 
+        "<span style=\"float: right\">" +
+        verbalcomp +
+        somaticcomp +
+        focuscomp +
+        materialcomp +
+        casting_time +
+        duration +
+        " <span class=\"badge badge-" + schoolborder + "\">" + 
+        spellArray[varX].school + 
+        "</span></span></summary><span class=\"card-body\">" + 
+        spellArray[varX].full_text + 
+        "<strong>Source</strong> " + 
+        spellArray[varX].source + 
+        "</span></details></div>"
+    }
+    assemble_spell5 += ""    
+    document.getElementById("spellID05").innerHTML = assemble_spell5;
+  }
+};
+
+xmlhttp5.open("POST", "./spell5.json", true);
+xmlhttp5.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp5.send("varX=" + dbParam);
+
 </script>    
+
+
 
 <hr>
 <hr>
